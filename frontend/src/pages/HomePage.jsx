@@ -99,7 +99,7 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen" data-testid="home-page">
-      {/* Hero Section */}
+      {/* Hero Section with AI Chat */}
       <section className="relative overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
@@ -111,62 +111,150 @@ export default function HomePage() {
           <div className="hero-gradient absolute inset-0" />
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
-          <div className="max-w-3xl">
-            <div className="flex items-center gap-2 mb-6 animate-fade-in">
-              <div className="px-3 py-1 rounded-full bg-[#8B5CF6]/20 border border-[#8B5CF6]/30 text-[#8B5CF6] text-sm font-medium">
-                <Zap className="w-4 h-4 inline mr-1" />
-                IA Integrada
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+            {/* Left Side - Hero Text */}
+            <div>
+              <div className="flex items-center gap-2 mb-6 animate-fade-in">
+                <div className="px-3 py-1 rounded-full bg-[#8B5CF6]/20 border border-[#8B5CF6]/30 text-[#8B5CF6] text-sm font-medium">
+                  <Zap className="w-4 h-4 inline mr-1" />
+                  IA Integrada
+                </div>
+              </div>
+
+              <h1 className="font-['Outfit'] text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 animate-fade-in stagger-1">
+                Tutoriais de Tecnologia
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#8B5CF6] to-[#3B82F6]">
+                  Simples e Diretos
+                </span>
+              </h1>
+
+              <p className="text-lg sm:text-xl text-[#A1A1AA] mb-8 animate-fade-in stagger-2">
+                Resolva problemas de tecnologia com tutoriais passo a passo. 
+                <span className="text-white font-semibold"> Pergunte à nossa IA agora!</span>
+              </p>
+
+              {/* Stats */}
+              <div className="flex flex-wrap gap-6 animate-fade-in stagger-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-lg bg-[#8B5CF6]/20 flex items-center justify-center">
+                    <BookOpen className="w-6 h-6 text-[#8B5CF6]" />
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold text-white">{stats.tutorials}+</p>
+                    <p className="text-sm text-[#A1A1AA]">Tutoriais</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-lg bg-[#3B82F6]/20 flex items-center justify-center">
+                    <TrendingUp className="w-6 h-6 text-[#3B82F6]" />
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold text-white">{stats.categories}</p>
+                    <p className="text-sm text-[#A1A1AA]">Categorias</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-lg bg-[#10B981]/20 flex items-center justify-center">
+                    <Users className="w-6 h-6 text-[#10B981]" />
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold text-white">24/7</p>
+                    <p className="text-sm text-[#A1A1AA]">IA Online</p>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <h1 className="font-['Outfit'] text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 animate-fade-in stagger-1">
-              Tutoriais de Tecnologia
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#8B5CF6] to-[#3B82F6]">
-                Simples e Diretos
-              </span>
-            </h1>
+            {/* Right Side - AI Chat Box */}
+            <div className="animate-fade-in stagger-2">
+              <div className="bg-[#18181B] border border-[#8B5CF6]/30 rounded-2xl overflow-hidden shadow-2xl shadow-[#8B5CF6]/10" data-testid="hero-ai-chat">
+                {/* Chat Header */}
+                <div className="flex items-center gap-3 p-4 border-b border-[#27272A] bg-gradient-to-r from-[#8B5CF6]/20 to-[#3B82F6]/20">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#8B5CF6] to-[#3B82F6] flex items-center justify-center animate-pulse-glow">
+                    <Sparkles className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-['Outfit'] font-bold text-lg text-white flex items-center gap-2">
+                      Assistente IA
+                      <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse"></span>
+                    </h3>
+                    <p className="text-sm text-[#A1A1AA]">Powered by Gemini • Online agora</p>
+                  </div>
+                </div>
 
-            <p className="text-lg sm:text-xl text-[#A1A1AA] mb-8 animate-fade-in stagger-2">
-              Resolva problemas de tecnologia com tutoriais passo a passo. 
-              Use nossa IA para tirar dúvidas instantaneamente.
-            </p>
+                {/* Chat Messages */}
+                <ScrollArea className="h-[280px] p-4">
+                  <div className="space-y-4">
+                    {messages.map((message, index) => (
+                      <div
+                        key={index}
+                        className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
+                      >
+                        <div
+                          className={
+                            message.role === "user"
+                              ? "bg-gradient-to-br from-[#8B5CF6] to-[#3B82F6] text-white rounded-2xl rounded-tr-sm px-4 py-3 max-w-[85%]"
+                              : "bg-[#27272A] text-white rounded-2xl rounded-tl-sm px-4 py-3 max-w-[85%] border border-[#3f3f46]"
+                          }
+                        >
+                          {message.role === "assistant" ? (
+                            <div className="text-sm leading-relaxed prose prose-invert prose-sm max-w-none">
+                              <ReactMarkdown>{message.content}</ReactMarkdown>
+                            </div>
+                          ) : (
+                            <p className="text-sm">{message.content}</p>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                    {isChatLoading && (
+                      <div className="flex justify-start">
+                        <div className="bg-[#27272A] text-white rounded-2xl rounded-tl-sm px-4 py-3 flex items-center gap-2 border border-[#3f3f46]">
+                          <Loader2 className="w-4 h-4 animate-spin text-[#8B5CF6]" />
+                          <span className="text-sm">Pensando...</span>
+                        </div>
+                      </div>
+                    )}
+                    <div ref={messagesEndRef} />
+                  </div>
+                </ScrollArea>
 
-            <div className="animate-fade-in stagger-3 max-w-xl">
-              <SearchBar placeholder="O que você quer aprender hoje?" />
-            </div>
-
-            {/* Stats */}
-            <div className="flex flex-wrap gap-8 mt-12 animate-fade-in stagger-4">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-lg bg-[#8B5CF6]/20 flex items-center justify-center">
-                  <BookOpen className="w-6 h-6 text-[#8B5CF6]" />
-                </div>
-                <div>
-                  <p className="text-2xl font-bold text-white">{stats.tutorials}+</p>
-                  <p className="text-sm text-[#A1A1AA]">Tutoriais</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-lg bg-[#3B82F6]/20 flex items-center justify-center">
-                  <TrendingUp className="w-6 h-6 text-[#3B82F6]" />
-                </div>
-                <div>
-                  <p className="text-2xl font-bold text-white">{stats.categories}</p>
-                  <p className="text-sm text-[#A1A1AA]">Categorias</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-lg bg-[#10B981]/20 flex items-center justify-center">
-                  <Users className="w-6 h-6 text-[#10B981]" />
-                </div>
-                <div>
-                  <p className="text-2xl font-bold text-white">{stats.comments}+</p>
-                  <p className="text-sm text-[#A1A1AA]">Comentários</p>
-                </div>
+                {/* Chat Input */}
+                <form onSubmit={handleChatSubmit} className="p-4 border-t border-[#27272A] bg-[#0f0f11]">
+                  <div className="flex gap-2">
+                    <Input
+                      value={chatInput}
+                      onChange={(e) => setChatInput(e.target.value)}
+                      placeholder="Pergunte qualquer coisa..."
+                      className="flex-1 bg-[#27272A] border-transparent focus:border-[#8B5CF6] text-white placeholder:text-[#71717a]"
+                      disabled={isChatLoading}
+                      data-testid="hero-chat-input"
+                    />
+                    <Button
+                      type="submit"
+                      disabled={isChatLoading || !chatInput.trim()}
+                      className="bg-gradient-to-r from-[#8B5CF6] to-[#3B82F6] hover:from-[#7C3AED] hover:to-[#2563EB] text-white px-4"
+                      data-testid="hero-chat-send-btn"
+                    >
+                      <Send className="w-4 h-4" />
+                    </Button>
+                  </div>
+                  <p className="text-xs text-[#71717a] mt-2 flex items-center gap-1">
+                    <MessageCircle className="w-3 h-3" />
+                    Pergunte sobre tutoriais, problemas de tecnologia ou como ganhar dinheiro online
+                  </p>
+                </form>
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Search Section */}
+      <section className="py-8 -mt-4">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SearchBar placeholder="Buscar tutoriais..." showAIHint={false} />
         </div>
       </section>
 
