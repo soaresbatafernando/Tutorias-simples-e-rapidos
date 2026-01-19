@@ -1,51 +1,46 @@
-import { useEffect } from "react";
 import "@/App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
+import { Toaster } from "@/components/ui/sonner";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+// Pages
+import HomePage from "@/pages/HomePage";
+import TutorialsPage from "@/pages/TutorialsPage";
+import TutorialDetailPage from "@/pages/TutorialDetailPage";
+import QuickSolutionsPage from "@/pages/QuickSolutionsPage";
+import BlogPage from "@/pages/BlogPage";
+import BlogPostPage from "@/pages/BlogPostPage";
+import ToolsPage from "@/pages/ToolsPage";
+import ContactPage from "@/pages/ContactPage";
+import AdminPage from "@/pages/AdminPage";
 
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
-  };
-
-  useEffect(() => {
-    helloWorldApi();
-  }, []);
-
-  return (
-    <div>
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
-  );
-};
+// Components
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import ChatWidget from "@/components/ChatWidget";
+import BackToTop from "@/components/BackToTop";
 
 function App() {
   return (
-    <div className="App">
+    <div className="min-h-screen bg-[#09090B] noise-bg">
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
+        <Navbar />
+        <main className="pt-20">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/tutoriais" element={<TutorialsPage />} />
+            <Route path="/tutoriais/:slug" element={<TutorialDetailPage />} />
+            <Route path="/solucoes-rapidas" element={<QuickSolutionsPage />} />
+            <Route path="/blog" element={<BlogPage />} />
+            <Route path="/blog/:slug" element={<BlogPostPage />} />
+            <Route path="/ferramentas" element={<ToolsPage />} />
+            <Route path="/contato" element={<ContactPage />} />
+            <Route path="/admin" element={<AdminPage />} />
+          </Routes>
+        </main>
+        <Footer />
+        <ChatWidget />
+        <BackToTop />
+        <Toaster position="top-right" theme="dark" />
       </BrowserRouter>
     </div>
   );
