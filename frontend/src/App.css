@@ -12,9 +12,9 @@
 /* AI Chat widget */
 .chat-widget {
   position: fixed;
-  bottom: 1.5rem;
+  bottom: 6rem;
   right: 1.5rem;
-  z-index: 50;
+  z-index: 100;
 }
 
 .chat-container {
@@ -112,7 +112,7 @@
 /* Back to top button */
 .back-to-top {
   position: fixed;
-  bottom: 6rem;
+  bottom: 10rem;
   right: 1.5rem;
   width: 48px;
   height: 48px;

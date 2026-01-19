@@ -71,7 +71,7 @@ export const ChatWidget = () => {
   };
 
   return (
-    <div className="chat-widget" data-testid="chat-widget">
+    <div className="fixed bottom-24 right-6 z-[100]" data-testid="chat-widget">
       {/* Chat Toggle Button */}
       {!isOpen && (
         <Button
