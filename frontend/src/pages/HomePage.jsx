@@ -1,9 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Zap, Monitor, Smartphone, Wifi, DollarSign, Code, BookOpen, TrendingUp, Users } from "lucide-react";
+import { ArrowRight, Zap, Monitor, Smartphone, Wifi, DollarSign, Code, BookOpen, TrendingUp, Users, Send, Sparkles, Loader2, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import SearchBar from "@/components/SearchBar";
 import TutorialCard from "@/components/TutorialCard";
+import ReactMarkdown from "react-markdown";
 import axios from "axios";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
@@ -20,6 +23,26 @@ export default function HomePage() {
   const [featuredTutorials, setFeaturedTutorials] = useState([]);
   const [stats, setStats] = useState({ tutorials: 0, categories: 0, comments: 0 });
   const [isLoading, setIsLoading] = useState(true);
+  
+  // AI Chat state for homepage
+  const [messages, setMessages] = useState([
+    {
+      role: "assistant",
+      content: "Olá! Sou o assistente virtual do **Tutoria Fácil**. Pergunte qualquer coisa sobre tecnologia, celulares, computadores, internet ou como ganhar dinheiro online!",
+    },
+  ]);
+  const [chatInput, setChatInput] = useState("");
+  const [isChatLoading, setIsChatLoading] = useState(false);
+  const [sessionId, setSessionId] = useState(null);
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   useEffect(() => {
     fetchData();
@@ -37,6 +60,40 @@ export default function HomePage() {
       console.error("Error fetching data:", error);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleChatSubmit = async (e) => {
+    e.preventDefault();
+    if (!chatInput.trim() || isChatLoading) return;
+
+    const userMessage = chatInput.trim();
+    setChatInput("");
+    setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
+    setIsChatLoading(true);
+
+    try {
+      const response = await axios.post(`${API}/chat`, {
+        message: userMessage,
+        session_id: sessionId,
+      });
+      
+      setSessionId(response.data.session_id);
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", content: response.data.response },
+      ]);
+    } catch (error) {
+      console.error("Chat error:", error);
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content: "Desculpe, ocorreu um erro. Tente novamente.",
+        },
+      ]);
+    } finally {
+      setIsChatLoading(false);
     }
   };
 
