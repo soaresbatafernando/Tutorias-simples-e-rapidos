@@ -259,7 +259,7 @@ export default function HomePage() {
       </section>
 
       {/* Categories Section */}
-      <section className="py-16 lg:py-24">
+      <section className="py-12 lg:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-10">
             <div>
@@ -291,7 +291,7 @@ export default function HomePage() {
       </section>
 
       {/* Featured Tutorials */}
-      <section className="py-16 lg:py-24 bg-[#0F0F11]">
+      <section className="py-12 lg:py-16 bg-[#0F0F11]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-10">
             <div>
@@ -354,7 +354,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 lg:py-24">
+      <section className="py-12 lg:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="card p-8 lg:p-12 bg-gradient-to-br from-[#8B5CF6]/10 to-[#3B82F6]/10 border-[#8B5CF6]/30">
             <div className="max-w-2xl mx-auto text-center">
